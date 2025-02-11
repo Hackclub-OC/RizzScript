@@ -113,13 +113,25 @@ mewing (yo let me get i = 0; i beta 5; i++) {
 | console.log  | spittin                        |
 | const        | no cap                         |
 | let          | yo let me get                  |
+| var          | dawg                           |
 | for          | mewing                         |
 | while        | let him cook                   |
 | continue     | edge                           |
 | break        | just put the fries in the bag bro |
+| try          | hawk                           |
+| catch        | tuah                           |
+| finally      | spit on that thang             |
+| class        | skibidi                        |
+| import       | glaze                          |
+| from         | lock in                        |
 | ===          | twin                           |
 | >            | sigma                          |
 | <            | beta                           |
+| >=           | sigma beta                     |
+| <=           | twin beta                      |
+| &&           | twin fr fr                     |
+| ||           | no shot                        |
+| !            | cap                            |
 | +            | rizz                           |
 | -            | fanum tax                      |
 | *            | bussin                         |
