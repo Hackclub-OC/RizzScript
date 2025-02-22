@@ -179,6 +179,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔮 Future Plans
 
+- [ ] Add syntax highlighting
 - [ ] NPM Package
 - [ ] VS Code Extension
 - [ ] CLI Tool
