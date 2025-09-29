@@ -1,9 +1,8 @@
 "use client"
-
 import { Inter } from "next/font/google"
 import Navbar from "@/components/navbar"
 import { Button } from "@/components/ui/button"
-import { HelpCircle, X } from "lucide-react"
+import { HelpCircle } from "lucide-react"
 import { useEffect, useState } from "react"
 import type React from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -59,14 +58,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   
-
   return (
     <html lang="en">
       <body className={inter.className}>
         <Navbar />
         {children}
-        <CheatSheet />
         <Footer />
+        <CheatSheet />
       </body>
     </html>
   )
@@ -100,8 +98,8 @@ const Footer = () => {
 }
 
 const CheatSheet = () => { 
-
   const [open, setOpen] = useState(false)
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.ctrlKey && e.key === "/") {
@@ -109,9 +107,11 @@ const CheatSheet = () => {
         setOpen(true)
       }
     }
+
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [])
+
   return (
     <div className="fixed bottom-4 left-4 z-50">
         <Dialog open={open} onOpenChange={setOpen}>
@@ -141,7 +141,7 @@ const CheatSheet = () => {
                     <div>
                       <h3 className="font-semibold mb-2 text-base">JavaScript</h3>
                       {Object.keys(rizzTransformations).map((js) => (
-                        <div key={js} className="text-sm text-muted-foreground py-1 border-b border-gray-100">
+                        <div className="text-sm text-muted-foreground py-1 border-b border-gray-100" key={js}>
                           {js}
                         </div>
                       ))}
@@ -149,7 +149,7 @@ const CheatSheet = () => {
                     <div>
                       <h3 className="font-semibold mb-2 text-base">RizzScript</h3>
                       {Object.values(rizzTransformations).map((rizz) => (
-                        <div key={rizz} className="text-sm text-muted-foreground py-1 border-b border-gray-100">
+                        <div className="text-sm text-muted-foreground py-1 border-b border-gray-100" key={rizz}>
                           {rizz}
                         </div>
                       ))}
