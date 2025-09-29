@@ -1,5 +1,4 @@
 "use client"
-
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -7,6 +6,17 @@ import { Terminal, Play, HelpCircle, X } from "lucide-react"
 // import Prism from "prismjs"
 import hljs from "highlight.js"
 
+// Declare Prism as a global variable
+declare global {
+  interface Window {
+    Prism?: {
+      highlightElement: (element: HTMLElement) => void;
+      languages: Record<string, unknown>;
+    };
+  }
+}
+
+const Prism = typeof window !== 'undefined' ? window.Prism : undefined;
 
 hljs.registerLanguage("rizzscript", function (hljs) {
   return {
@@ -25,7 +35,6 @@ hljs.registerLanguage("rizzscript", function (hljs) {
     ]
   }
 })
-
 
 // Updated transformations to include symbols
 const rizzTransformations = {
@@ -65,36 +74,38 @@ const rizzTransformations = {
 }
 
 // Enhanced syntax highlighting
-Prism.languages.rizzscript = {
-  comment: /\/\/.*|\/\*[\s\S]*?\*\//,
-  string: /(["'])(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
-  keyword: {
-    pattern:
-      /\b(?:yo dawg|slide back wit|chat is this real|yo chat|only in ohio|spittin|no cap|sus|yo let me get|mewing|let him cook|hawk|tuah|spit on that thang|skibidi|glaze|lock in)\b/,
-    alias: "keyword",
-  },
-  function: {
-    pattern: /\b[a-z_]\w*(?=\()/i,
-    alias: "function",
-  },
-  number: /\b0x[\da-f]+\b|(?:\b\d+(?:\.\d*)?|\B\.\d+)(?:e[+-]?\d+)?/i,
-  operator: {
-    pattern: /(\s)(?:rizz|fanum tax|bussin|ratio|twin|sigma|beta|sigma twin|beta twin|fr fr|no shot|cap)(?=\s)/,
-    lookbehind: true,
-    alias: "operator",
-  },
-  variable: {
-    pattern: /\b(?:no cap|sus|yo let me get)\b/,
-    alias: "variable",
-  },
-  builtin: {
-    pattern: /\b(?:spittin|slide back wit)\b/,
-    alias: "builtin",
-  },
-  punctuation: {
-    pattern: /[{}[\];(),.:]/,
-    alias: "punctuation",
-  },
+if (typeof window !== 'undefined' && Prism) {
+  Prism.languages.rizzscript = {
+    comment: /\/\/.*|\/\*[\s\S]*?\*\//,
+    string: /(["'])(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
+    keyword: {
+      pattern:
+        /\b(?:yo dawg|slide back wit|chat is this real|yo chat|only in ohio|spittin|no cap|sus|yo let me get|mewing|let him cook|hawk|tuah|spit on that thang|skibidi|glaze|lock in)\b/,
+      alias: "keyword",
+    },
+    function: {
+      pattern: /\b[a-z_]\w*(?=\()/i,
+      alias: "function",
+    },
+    number: /\b0x[\da-f]+\b|(?:\b\d+(?:\.\d*)?|\B\.\d+)(?:e[+-]?\d+)?/i,
+    operator: {
+      pattern: /(\s)(?:rizz|fanum tax|bussin|ratio|twin|sigma|beta|sigma twin|beta twin|fr fr|no shot|cap)(?=\s)/,
+      lookbehind: true,
+      alias: "operator",
+    },
+    variable: {
+      pattern: /\b(?:no cap|sus|yo let me get)\b/,
+      alias: "variable",
+    },
+    builtin: {
+      pattern: /\b(?:spittin|slide back wit)\b/,
+      alias: "builtin",
+    },
+    punctuation: {
+      pattern: /[{}[\];(),.:]/,
+      alias: "punctuation",
+    },
+  }
 }
 
 export default function Editor() {
@@ -104,7 +115,6 @@ export default function Editor() {
   }
   slide back wit n bussin factorial(n fanum tax 1)
 }
-
 spittin(factorial(5))`)
   const [output, setOutput] = useState("")
   const [showTerminal, setShowTerminal] = useState(false)
@@ -112,7 +122,7 @@ spittin(factorial(5))`)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
-    if (editorRef.current) {
+    if (editorRef.current && Prism) {
       editorRef.current.textContent = input
       Prism.highlightElement(editorRef.current)
     }
@@ -130,14 +140,12 @@ spittin(factorial(5))`)
     setShowTerminal(true)
     try {
       const jsCode = transformBack(input)
-      const safeConsoleLog = (...args: any[]) => {
+      const safeConsoleLog = (...args: unknown[]) => {
         setOutput((prev) => prev + args.join(" ") + "\n")
       }
-
       const context = {
         console: { log: safeConsoleLog },
       }
-
       const fn = new Function(
         "console",
         `
@@ -145,7 +153,6 @@ spittin(factorial(5))`)
         ${jsCode}
       `,
       )
-
       setOutput("")
       fn(context.console)
     } catch (error) {
@@ -176,9 +183,9 @@ spittin(factorial(5))`)
     <Card className="border-[#FF46BC]/20 backdrop-blur-sm bg-white relative rounded-lg overflow-hidden">
       <div className="border-b border-neutral-200 p-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-red-500" />
-          <div className="w-3 h-3 rounded-full bg-yellow-500" />
-          <div className="w-3 h-3 rounded-full bg-green-500" />
+          <div className="w-3 h-3 rounded-full bg-red-500"></div>
+          <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+          <div className="w-3 h-3 rounded-full bg-green-500"></div>
           <span className="ml-2 text-neutral-600 text-sm">editor.riz</span>
         </div>
         <div className="flex items-center gap-2">
@@ -192,12 +199,11 @@ spittin(factorial(5))`)
           >
             <HelpCircle className="h-4 w-4" />
           </Button>
-          <Button onClick={executeRizzScript} className="bg-[#FF46BC] hover:bg-[#FF46BC]/90 gap-2">
+          <Button className="bg-[#FF46BC] hover:bg-[#FF46BC]/90 gap-2" onClick={executeRizzScript}>
             <Play className="w-4 h-4" /> Run
           </Button>
         </div>
       </div>
-
       <div className="relative h-[calc(100vh-10rem)] overflow-hidden">
         <pre
           ref={editorRef}
@@ -217,7 +223,6 @@ spittin(factorial(5))`)
           }}
         />
       </div>
-
       {showTerminal && (
         <div
           className="absolute bottom-0 left-0 right-0 bg-white border-t border-neutral-200 p-4 transform transition-all duration-300 ease-out overflow-hidden"
@@ -241,7 +246,7 @@ spittin(factorial(5))`)
               <X className="w-4 h-4" />
             </Button>
           </div>
-          <div className="font-mono text-sm text-black overflow-auto" style={{ maxHeight: "calc(50vh - 6rem)" }}>
+          <div className="font-mono text-sm text-black overflow-auto" style={{ maxHeight: "200px" }}>
             {output || "> Running rizzscript..."}
           </div>
         </div>
@@ -249,4 +254,3 @@ spittin(factorial(5))`)
     </Card>
   )
 }
-
