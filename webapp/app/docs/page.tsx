@@ -1,9 +1,7 @@
 "use client"
-
-import { Card,  } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { ChevronRight } from "lucide-react"
-import { Logo } from "@/components/Logo"
 
 const examples = {
   Variables: {
@@ -61,7 +59,7 @@ yo let me get z = 15;`,
     this.name = name
   }
   sayHello() {
-    console.log("Hey, I'm " + this.name)
+    console.log("Hey, I&apos;m " + this.name)
   }
 }`,
     rizz: `skibidi Person {
@@ -69,7 +67,7 @@ yo let me get z = 15;`,
     unc.name = name
   }
   sayHello() {
-    spittin("Hey, I'm " rizz unc.name)
+    spittin("Hey, I&apos;m " rizz unc.name)
   }
 }`,
   },
@@ -80,14 +78,12 @@ a + b
 a - b
 a * b
 a / b
-
 // Comparison
 a === b
 a > b
 a < b
 a >= b
 a <= b
-
 // Logical
 a && b
 a || b
@@ -97,21 +93,19 @@ a rizz b
 a fanum tax b
 a bussin b
 a ratio b
-
 // Comparison
 a twin b
 a sigma b
 a beta b
 a sigma twin b
 a beta twin b
-
 // Logical
 a fr fr b
 a no shot b
 cap a`,
   },
   WhileLoop: {
-    description: "While loops in RizzScript keep cooking until they're done.",
+    description: "While loops in RizzScript keep cooking until they&apos;re done.",
     js: `let i = 0;
 while (i < 5) {
   console.log(i);
@@ -125,37 +119,34 @@ let him cook (i beta 5) {
   },
 }
 
-
 export default function DocsPage() {
- return (
+  return (
     <div className="min-h-screen bg-[#FF46BC]/5">
       <div className="container mx-auto px-4 py-12">
         <div className="flex items-center gap-4 mb-12">
-          <Logo className="w-12 h-12" />
+          <div className="w-12 h-12 bg-[#FF46BC] rounded-lg flex items-center justify-center text-white font-bold">R</div>
           <h1 className="text-3xl font-semibold text-neutral-700">Documentation</h1>
         </div>
-
         <div className="grid gap-8 max-w-4xl mx-auto">
           <Card className="p-6 rounded-3xl border-[#FF46BC]/20">
             <h2 className="text-2xl font-semibold mb-4">Quick Start</h2>
             <p className="text-gray-600 mb-4">
               RizzScript is JavaScript with extra sauce. Every boring JavaScript keyword has been replaced with
-              something more entertaining. It's all about bringing that swagger to your code!
+              something more entertaining. It&apos;s all about bringing that swagger to your code!
             </p>
             <p className="text-sm text-gray-500">
               Pro tip: Press <kbd className="px-2 py-1 bg-neutral-100 rounded">Ctrl</kbd> +{" "}
               <kbd className="px-2 py-1 bg-neutral-100 rounded">/</kbd> to open the cheatsheet anywhere!
             </p>
           </Card>
-
           <Card className="rounded-3xl border-[#FF46BC]/20">
             <Accordion type="single" collapsible>
               {Object.entries(examples).map(([title, { description, js, rizz }]) => (
-                <AccordionItem value={title} key={title} className="px-6 py-2 first:rounded-t-3xl last:rounded-b-3xl">
+                <AccordionItem key={title} value={title} className="px-6 py-2 first:rounded-t-3xl last:rounded-b-3xl">
                   <AccordionTrigger className="hover:no-underline">
                     <div className="flex items-center gap-2">
                       <ChevronRight className="w-4 h-4 text-[#FF46BC]" />
-                      <span>{title}</span>
+                      {title}
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
@@ -184,4 +175,3 @@ export default function DocsPage() {
     </div>
   )
 }
-
